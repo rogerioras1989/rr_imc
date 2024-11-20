@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .logo {
+            max-width: 200px;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 300px;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: left;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #mensagem {
+            color: red;
+            font-size: 12px; /* Reduzido para ficar mais discreto */
+            margin-top: 5px;
+        }
+
+        a {
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://rrmedicos.com.br/wp-content/uploads/2018/11/logo-RR.png.webp" alt="Logo da Empresa" class="logo">
+    <h1>Calculadora de IMC</h1>
+    <table>
+        <tr>
+            <td>Peso (Kg):</td>
+            <td><input type="number" id="peso" placeholder="Ex.: 70" required></td>
+        </tr>
+        <tr>
+            <td>Altura (m):</td>
+            <td>
+                <input type="text" id="altura" placeholder="Ex.: 1.75" required>
+                <div id="mensagem">* Use ponto como separador (Ex.: 1.80).</div>
+            </td>
+        </tr>
+        <tr>
+            <td>IMC:</td>
+            <td><span id="imc"></span></td>
+        </tr>
+    </table>
+    <button onclick="calcularIMC()">Calcular IMC</button>
+
+    <div id="resultado"></div>
+
+    <script>
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value);
+
+            if (!peso || !altura) {
+                alert("Por favor, preencha os campos corretamente!");
+                return;
+            }
+
+            const imc = (peso / (altura * altura)).toFixed(2);
+            document.getElementById('imc').innerText = imc;
+
+            let resultado = '';
+            let linkAgendamento = '<a href="https://bit.ly/m/unidades" target="_blank">Clique aqui para agendar</a>';
+
+            if (imc < 18.5) {
+                resultado = 'Você está abaixo do peso. Consulte um profissional para avaliar sua saúde. ' + linkAgendamento;
+            } else if (imc < 24.9) {
+                resultado = 'Parabéns! Seu peso está dentro da faixa considerada saudável. Isso reduz seu risco de doenças crônicas. ' + linkAgendamento;
+            } else if (imc < 29.9) {
+                resultado = 'Atenção! Você está na faixa de sobrepeso, o que pode aumentar o risco de hipertensão e diabetes. ' + linkAgendamento;
+            } else if (imc < 34.9) {
+                resultado = 'Seu peso está na faixa de obesidade grau 1. Reduzir 5 a 10% do peso pode melhorar sua saúde. ' + linkAgendamento;
+            } else if (imc < 39.9) {
+                resultado = 'Você está na faixa de obesidade grau 2. Pode ser elegível para cirurgia bariátrica, dependendo das doenças associadas. ' + linkAgendamento;
+            } else {
+                resultado = 'A obesidade grau 3 apresenta sérios riscos. Você já atende aos critérios para cirurgia bariátrica. ' + linkAgendamento;
+            }
+
+            document.getElementById('resultado').innerHTML = resultado;
+        }
+    </script>
+</body>
+</html>
